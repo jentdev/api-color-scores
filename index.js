@@ -10,7 +10,7 @@ const db = mongoose.connection;
 const PORT = process.env.PORT;
 
 db.on('error', (err) => console.error(err));
-db.once('connected', () => console.log(`connect to db.`));
+db.once('listen', () => console.log(`connect to db.`));
 
 // middleware - codes run when server gets a request, but before it get passed to your routes 
 app.use(express.json()); // accept json as a body
