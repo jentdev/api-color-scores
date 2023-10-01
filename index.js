@@ -22,6 +22,10 @@ app.use(express.json()); // accept json as body
 // routes
 app.use('/scores', require('./routes/scores'));
 
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
 //Connect to the database before listening
 connectDB().then(() => {
     app.listen(PORT, () => console.log(`server started on port ${PORT}`));
