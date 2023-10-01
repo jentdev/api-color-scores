@@ -1,19 +1,24 @@
-require('dotenv').config();
-
 const express = require('express');
-const app = express();
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGO_URI);
+const PORT = process.env.PORT || 3000;
 
-const db = mongoose.connection;
-const PORT = process.env.PORT;
+// export function to connect to mongodb
+const connectDB = require('./config/db');
 
-db.on('error', (err) => console.error(err));
-db.once('connected', () => console.log(`connect to db.`));
+// load config
+dotenv.config({ path: './config/config.env'});
 
-// middleware - codes run when server gets a request, but before it get passed to your routes 
-app.use(express.json()); // accept json as a body
+connectDB();
+
+// db.on('error', (err) => console.error(err));
+// db.once('connected', () => console.log(`connect to db.`));
+
+const app = express();
+
+// middleware
+app.use(express.json()); // accept json as body
 
 // routes
 app.use('/scores', require('./routes/scores'));
