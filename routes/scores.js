@@ -13,6 +13,17 @@ router.get('/', async (req, res) => {
     }
 });
 
+// desc     get top10
+// route    GET /scores/10
+
+router.get('/10', async (req, res) => {
+    try {
+        const scores = await Score.find().sort({ score: -1 }).limit(10);
+        res.json(scores);
+    } catch (err) {
+        res.status(500).json({ message: err.message }); // 500 server error
+    }
+});
 
 // desc     get one
 // route    GET /scores/:id
